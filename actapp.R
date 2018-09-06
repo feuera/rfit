@@ -4,6 +4,7 @@ library(plyr)
 library(plotly)
 library(shiny)
 library(leaflet)
+library(data.table)
 library(DT)
 #library(ggplot2)
 
@@ -22,9 +23,10 @@ read_activity <-function(file = file.choose()) {
 read_tcx <- function(file = file.choose()) {
     doc <- xmlParse(file)
     nodes <- getNodeSet(doc, "//ns:Trackpoint", "ns")
+    #rows <- lapply(nodes, function(x) as.data.frame(xmlToList(x))) 
+    #data <- do.call("rbind", rows) 
+    #data <- rbindlist(rows, fill=T)  # same as above but faster, neither working :(
     data <- plyr::ldply(nodes, as.data.frame(xmlToList))
-    #rows <- lapply(nodes, function(x) data.frame(xmlToList(x), stringsAsFactors=F)) 
-    #data <- do.call("rbind", rows)
     data$alt <- as.numeric(as.character(data$value.AltitudeMeters))
     data$lat <- as.numeric(as.character(data$value.Position.LatitudeDegrees))
     data$long <-as.numeric(as.character(data$value.Position.LongitudeDegrees))
