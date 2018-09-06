@@ -55,7 +55,8 @@ read_gpx <- function(file = file.choose()) {
 read_fit <- function(file = file.choose()) {
     #fitf <- "./data/1018058198.fit"
     #FitCSVTool <- system.file("/home/andi_sp/spone/ipleaf/FitCSVTool.jar")
-    FitCSVTool <- "/home/andi_sp/spone/ipleaf/FitCSVTool.jar"
+    #FitCSVTool <- "/home/andi_sp/spone/ipleaf/FitCSVTool.jar"
+    FitCSVTool <- "./FitCSVTool.jar"
     tmpf <- tempfile()
     system2("java", args = c("-jar", FitCSVTool, "-b", file, tmpf, "--data", "record", "--defn", "none"), stdout=FALSE)
     message("Reading .fit file...")
